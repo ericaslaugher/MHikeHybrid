@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MHikeHybrid.ViewModels"
+             xmlns:model="clr-namespace:MHikeHybrid.Models"
+             x:Class="MHikeHybrid.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="M-Hike (Hybrid)">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Xóa tất cả"
+                     Command="{Binding DeleteAllHikesCommand}"
+                     Order="Secondary" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="*, Auto">
+
+        <CollectionView Grid.Row="0" ItemsSource="{Binding Hikes}" Margin="10" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Hike">
+
+                    <Frame Padding="0" Margin="0,0,0,10" CornerRadius="10" BorderColor="LightGray" HasShadow="True">
+                        <Grid ColumnDefinitions="*, Auto, Auto" Padding="15">
+
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=GoToEditHikeCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </VerticalStackLayout.GestureRecognizers>
+
+                                <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" />
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="Địa điểm:" FontAttributes="Bold" />
+                                    <Label Text="{Binding Location}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="Ngày đi:" FontAttributes="Bold" />
+                                    <Label Text="{Binding HikeDate}" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <ImageButton Grid.Column="1"
+                                         Source="edit.png" 
+                                         HeightRequest="40" WidthRequest="40"
+                                         VerticalOptions="Center"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=GoToEditHikeCommand}"
+                                         CommandParameter="{Binding .}">
+                                <ImageButton.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=GoToEditHikeCommand}"
+                                        CommandParameter="{Binding .}" />
+                                </ImageButton.GestureRecognizers>
+                            </ImageButton>
+
+                            <ImageButton Grid.Column="2"
+                                         Source="delete.png" 
+                                         HeightRequest="40" WidthRequest="40"
+                                         VerticalOptions="Center"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteHikeCommand}"
+                                         CommandParameter="{Binding .}" />
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+
+            <CollectionView.EmptyView>
+                <Label Text="Không có chuyến đi nào. Nhấn '+' để thêm."
+                       HorizontalOptions="Center" VerticalOptions="Center"
+                       FontSize="Medium" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+
+        <Button Grid.Row="1"
+                Text="+"
+                FontSize="Large"
+                FontAttributes="Bold"
+                CornerRadius="30"
+                HeightRequest="60"
+                WidthRequest="60"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"
+                Command="{Binding GoToAddHikeCommand}" />
+
+    </Grid>
+
+</ContentPage>

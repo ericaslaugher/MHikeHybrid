@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MHikeHybrid.ViewModels"
+             x:Class="MHikeHybrid.Views.AddHikePage"
+             x:DataType="vm:AddHikeViewModel"
+             Title="{Binding PageTitle}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+
+
+            <Label Text="Tên chuyến đi (Bắt buộc)" />
+            <Entry Text="{Binding Name}" Placeholder="ví dụ: Leo núi Bà Đen" />
+
+
+            <Label Text="Địa điểm (Bắt buộc)" Margin="0,10,0,0" />
+            <Entry Text="{Binding Location}" Placeholder="ví dụ: Tây Ninh" />
+
+
+            <Label Text="Ngày đi (Bắt buộc)" Margin="0,10,0,0" />
+            <DatePicker Date="{Binding HikeDate}" />
+
+
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0" VerticalOptions="Center">
+                <Label Text="Có chỗ đỗ xe?" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding ParkingAvailable}" />
+            </HorizontalStackLayout>
+
+
+            <Label Text="Chiều dài (Bắt buộc)" Margin="0,10,0,0" />
+            <Entry Text="{Binding Length}" Placeholder="ví dụ: 10 km" />
+
+            <Label Text="Mức độ khó (Bắt buộc)" Margin="0,10,0,0" />
+            <Picker Title="Chọn mức độ" 
+                    ItemsSource="{Binding DifficultyOptions}"
+                    SelectedItem="{Binding Difficulty}" />
+
+
+            <Label Text="Mô tả" Margin="0,10,0,0" />
+            <Editor Text="{Binding Description}" Placeholder="Mô tả (Tùy chọn)" AutoSize="TextChanges" HeightRequest="100" />
+
+
+            <Label Text="Phương tiện" Margin="0,10,0,0" />
+            <Entry Text="{Binding Transport}" Placeholder="ví dụ: Xe máy" />
+
+
+            <Label Text="Thời gian dự kiến" Margin="0,10,0,0" />
+            <Entry Text="{Binding EstTime}" Placeholder="ví dụ: 4 giờ" />
+
+
+            <Button Text="{Binding SaveButtonText}" 
+                    Command="{Binding SaveHikeCommand}"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Margin="0,20,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
