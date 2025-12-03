@@ -12,7 +12,6 @@ namespace MHikeHybrid.ViewModels
     {
         private readonly DatabaseService _dbService;
 
-
         [ObservableProperty]
         private ObservableCollection<Hike> hikes;
 
@@ -37,24 +36,24 @@ namespace MHikeHybrid.ViewModels
         [RelayCommand]
         private async Task GoToAddHike()
         {
-           
+
             await Shell.Current.GoToAsync(nameof(AddHikePage));
         }
 
-       
+
 
         [RelayCommand]
         private async Task DeleteHike(Hike hike)
         {
             if (hike == null) return;
 
-          
-            bool confirmed = await Shell.Current.DisplayAlert("Xác nhận xóa", $"Bạn có chắc muốn xóa '{hike.Name}'?", "Xóa", "Hủy");
+
+            bool confirmed = await Shell.Current.DisplayAlert("Confirm Delete", $"Are you sure you want to delete '{hike.Name}'?", "Delete", "Cancel");
 
             if (confirmed)
             {
                 await _dbService.DeleteHikeAsync(hike);
-               
+
                 Hikes.Remove(hike);
             }
         }
@@ -64,23 +63,23 @@ namespace MHikeHybrid.ViewModels
         {
             if (hike == null) return;
 
-           
+
             await Shell.Current.GoToAsync($"{nameof(AddHikePage)}?hikeId={hike.Id}");
         }
 
         [RelayCommand]
         private async Task DeleteAllHikes()
         {
-          
-            bool confirmed = await Shell.Current.DisplayAlert("Xác nhận xóa", "Bạn có chắc muốn xóa TẤT CẢ chuyến đi? Hành động này không thể hoàn tác.", "Xóa tất cả", "Hủy");
+
+            bool confirmed = await Shell.Current.DisplayAlert("Confirm Delete", "Are you sure you want to delete ALL hikes? This action cannot be undone.", "Delete All", "Cancel");
 
             if (confirmed)
             {
                 await _dbService.DeleteAllHikesAsync();
-               
+
                 Hikes.Clear();
             }
         }
-       
+
     }
 }

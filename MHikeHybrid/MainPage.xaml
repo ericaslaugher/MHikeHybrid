@@ -8,7 +8,7 @@
              Title="M-Hike (Hybrid)">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Xóa tất cả"
+        <ToolbarItem Text="Delete All"
                      Command="{Binding DeleteAllHikesCommand}"
                      Order="Secondary" />
     </ContentPage.ToolbarItems>
@@ -31,11 +31,11 @@
 
                                 <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" />
                                 <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Địa điểm:" FontAttributes="Bold" />
+                                    <Label Text="Location:" FontAttributes="Bold" />
                                     <Label Text="{Binding Location}" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Ngày đi:" FontAttributes="Bold" />
+                                    <Label Text="Date:" FontAttributes="Bold" />
                                     <Label Text="{Binding HikeDate}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
@@ -69,7 +69,7 @@
 
 
             <CollectionView.EmptyView>
-                <Label Text="Không có chuyến đi nào. Nhấn '+' để thêm."
+                <Label Text="No trips available. Press '+' to add."
                        HorizontalOptions="Center" VerticalOptions="Center"
                        FontSize="Medium" />
             </CollectionView.EmptyView>

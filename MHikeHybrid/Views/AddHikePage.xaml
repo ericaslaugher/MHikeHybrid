@@ -8,53 +8,42 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
 
+            <Label Text="Hike Name (Required)" />
+            <Entry Text="{Binding Name}" Placeholder="e.g., Blue Mountain Trail" />
 
-            <Label Text="Tên chuyến đi (Bắt buộc)" />
-            <Entry Text="{Binding Name}" Placeholder="ví dụ: Leo núi Bà Đen" />
+            <Label Text="Location (Required)" Margin="0,10,0,0" />
+            <Entry Text="{Binding Location}" Placeholder="e.g., National Park" />
 
-
-            <Label Text="Địa điểm (Bắt buộc)" Margin="0,10,0,0" />
-            <Entry Text="{Binding Location}" Placeholder="ví dụ: Tây Ninh" />
-
-
-            <Label Text="Ngày đi (Bắt buộc)" Margin="0,10,0,0" />
+            <Label Text="Hike Date (Required)" Margin="0,10,0,0" />
             <DatePicker Date="{Binding HikeDate}" />
 
-
             <HorizontalStackLayout Spacing="10" Margin="0,10,0,0" VerticalOptions="Center">
-                <Label Text="Có chỗ đỗ xe?" VerticalOptions="Center" />
+                <Label Text="Parking Available?" VerticalOptions="Center" />
                 <Switch IsToggled="{Binding ParkingAvailable}" />
             </HorizontalStackLayout>
 
+            <Label Text="Length (Required)" Margin="0,10,0,0" />
+            <Entry Text="{Binding Length}" Placeholder="e.g., 10 km" />
 
-            <Label Text="Chiều dài (Bắt buộc)" Margin="0,10,0,0" />
-            <Entry Text="{Binding Length}" Placeholder="ví dụ: 10 km" />
-
-            <Label Text="Mức độ khó (Bắt buộc)" Margin="0,10,0,0" />
-            <Picker Title="Chọn mức độ" 
+            <Label Text="Difficulty (Required)" Margin="0,10,0,0" />
+            <Picker Title="Select level" 
                     ItemsSource="{Binding DifficultyOptions}"
                     SelectedItem="{Binding Difficulty}" />
 
+            <Label Text="Description" Margin="0,10,0,0" />
+            <Editor Text="{Binding Description}" Placeholder="Description (Optional)" AutoSize="TextChanges" HeightRequest="100" />
 
-            <Label Text="Mô tả" Margin="0,10,0,0" />
-            <Editor Text="{Binding Description}" Placeholder="Mô tả (Tùy chọn)" AutoSize="TextChanges" HeightRequest="100" />
+            <Label Text="Transport" Margin="0,10,0,0" />
+            <Entry Text="{Binding Transport}" Placeholder="e.g., Motorbike" />
 
-
-            <Label Text="Phương tiện" Margin="0,10,0,0" />
-            <Entry Text="{Binding Transport}" Placeholder="ví dụ: Xe máy" />
-
-
-            <Label Text="Thời gian dự kiến" Margin="0,10,0,0" />
-            <Entry Text="{Binding EstTime}" Placeholder="ví dụ: 4 giờ" />
-
+            <Label Text="Estimated Time" Margin="0,10,0,0" />
+            <Entry Text="{Binding EstTime}" Placeholder="e.g., 4 hours" />
 
             <Button Text="{Binding SaveButtonText}" 
                     Command="{Binding SaveHikeCommand}"
                     BackgroundColor="Green"
                     TextColor="White"
                     Margin="0,20,0,0" />
-
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

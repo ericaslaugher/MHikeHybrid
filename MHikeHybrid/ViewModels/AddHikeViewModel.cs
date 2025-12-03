@@ -6,27 +6,22 @@ using System.Threading.Tasks;
 
 namespace MHikeHybrid.ViewModels
 {
- 
     public partial class AddHikeViewModel : ObservableObject, IQueryAttributable
     {
         private readonly DatabaseService _dbService;
 
-      
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsEditMode))]
-        int hikeId; 
+        int hikeId;
 
         [ObservableProperty]
-        string pageTitle = "Thêm chuyến đi mới";
+        string pageTitle = "Add New Hike";
 
         [ObservableProperty]
-        string saveButtonText = "Lưu chuyến đi";
+        string saveButtonText = "Save Hike";
 
         public bool IsEditMode => HikeId != 0;
-    
 
-
-        
         [ObservableProperty]
         string name;
 
@@ -55,7 +50,7 @@ namespace MHikeHybrid.ViewModels
         string estTime;
 
 
-        public List<string> DifficultyOptions { get; } = new List<string> { "Dễ", "Trung bình", "Khó", "Rất khó" };
+        public List<string> DifficultyOptions { get; } = new List<string> { "Easy", "Medium", "Hard", "Very Hard" };
 
 
         public AddHikeViewModel(DatabaseService dbService)
@@ -63,44 +58,45 @@ namespace MHikeHybrid.ViewModels
             _dbService = dbService;
         }
 
-     
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-         
+
             if (query.ContainsKey("hikeId"))
             {
-           
+
                 HikeId = int.Parse(query["hikeId"].ToString());
-              
+
                 Task.Run(async () => await LoadHikeData(HikeId));
             }
         }
 
         private async Task LoadHikeData(int id)
         {
-            if (id == 0) return; 
+            if (id == 0) return;
 
             var hike = await _dbService.GetHikeAsync(id);
             if (hike != null)
             {
-                
+
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                 
+
                     Name = hike.Name;
                     Location = hike.Location;
-               
+
+                   
                     HikeDate = DateTime.ParseExact(hike.HikeDate, "dd/MM/yyyy", null);
                     ParkingAvailable = hike.ParkingAvailable;
                     Length = hike.Length;
-                    Difficulty = hike.Difficulty;
+                    Difficulty = hike.Difficulty; 
                     Description = hike.Description;
                     Transport = hike.Transport;
                     EstTime = hike.EstTime;
 
-                  
-                    PageTitle = "Sửa chuyến đi";
-                    SaveButtonText = "Cập nhật";
+
+                    PageTitle = "Edit Hike";
+                    SaveButtonText = "Update";
                 });
             }
         }
@@ -112,7 +108,7 @@ namespace MHikeHybrid.ViewModels
 
             if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Location) || string.IsNullOrWhiteSpace(Length))
             {
-                await Shell.Current.DisplayAlert("Lỗi", "Tên, Địa điểm, và Chiều dài là bắt buộc", "OK");
+                await Shell.Current.DisplayAlert("Error", "Name, Location, and Length are required", "OK");
                 return;
             }
 
@@ -134,11 +130,11 @@ namespace MHikeHybrid.ViewModels
 
             await _dbService.SaveHikeAsync(hike);
 
-            // Hiển thị thông báo thành công
-            string message = IsEditMode ? "Đã cập nhật chuyến đi!" : "Đã lưu chuyến đi!";
-            await Shell.Current.DisplayAlert("Thành công", message, "OK");
+           
+            string message = IsEditMode ? "Hike updated successfully!" : "Hike saved successfully!";
+            await Shell.Current.DisplayAlert("Success", message, "OK");
 
-            // Tự động quay về trang danh sách
+         
             await Shell.Current.GoToAsync("..");
         }
     }
